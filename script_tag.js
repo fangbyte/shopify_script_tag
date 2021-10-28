@@ -1,3 +1,5 @@
-jQuery(document).ready(function () {
-  console.log('Testing adding script tag!');
-});
+const countryCode = Shopify.checkout.shipping_address.country_code
+
+if (["US", "CA"].includes(countryCode)) {
+  Shopify.Checkout.OrderStatus.addContentBox('<script>function sendData(){const XHR=new XMLHttpRequest(); const orderId=Shopify.checkout.order_id; XHR.addEventListener( "load", function(event){alert( event.target.responseText );}); XHR.addEventListener( "error", function(event){alert( "Oops! Something went wrong.");}); XHR.open ( "POST", `https://api.dev-trackship.shipengine.com/sms-pre-auth/${orderId}` ); XHR.setRequestHeader("Content-Type", "application/json"); var body=JSON.stringify({country_code: "1", phone_number: form.elements["sms_phone_number"].value, destination_country_code: "US", order_source_code: "shopify"}); XHR.send ( body );}const form=document.getElementById( "smsForm" ); form.addEventListener( "submit", function( event ){sendData(); event.preventDefault();})</script><p class="od-step__description">Receive shipping & delivery updates by text. By entering a number you accept the terms.</p><form id="smsForm"> <input class="field__input" id="sms_phone_number" type="tel" aria-label="Mobile Number" aria-required="true" placeholder="000-000-0000" style="max-width:125px;display:inline;"></input> <button type="submit" class="ui-button btn btn--primary btn--size-small shown-if-js"> Sign Up </button> <div class="errors"> </div></form>');
+}
